@@ -2,7 +2,7 @@ package com.rtjvm.scala.oop.filesystem
 
 import java.util.Scanner
 
-import com.rtjvm.scala.oop.commands.Command
+import com.rtjvm.scala.oop.commands.{Command, ExitCommand}
 import com.rtjvm.scala.oop.files.Directory
 
 object Filesystem extends App {
@@ -10,7 +10,7 @@ object Filesystem extends App {
   var state = State(root, root)
   val scanner = new Scanner(System.in)
 
-  while (true) {
+  while (!state.output.eq(ExitCommand.EXIT_MESSAGE)) {
     state.show
     val input = scanner.nextLine()
     state = Command.from(input).apply(state)

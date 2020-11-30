@@ -7,6 +7,10 @@ trait Command {
 }
 
 object Command {
-  def from(input: String): Command =
-    new UnknownCommand()
+  def from(input: String): Command = {
+    input match {
+      case "exit" => new ExitCommand
+      case _ => new UnknownCommand
+    }
+  }
 }
