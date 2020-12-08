@@ -10,16 +10,24 @@ trait Command {
 object Command {
   val EXIT_INPUT_COMMAND = "exit"
   val MKDIR_INPUT_COMMAND = "mkdir"
+  val LS_INPUT_COMMAND = "ls"
+  val PWD_INPUT_COMMAND = "pwd"
+  val TOUCH_INPUT_COMMAND = "touch"
 
   def from(input: String): Command = {
     val tokens: Array[String] = input.split(" ")
 
     if (input.isEmpty || tokens.isEmpty) emptyCommand
     else tokens(0) match {
+      case EXIT_INPUT_COMMAND => new Exit
+      case LS_INPUT_COMMAND => new Ls
+      case PWD_INPUT_COMMAND => new Pwd
       case MKDIR_INPUT_COMMAND =>
         if (tokens.length < 2) incompleteCommand(MKDIR_INPUT_COMMAND)
         else new Mkdir(tokens(1))
-      case EXIT_INPUT_COMMAND => new Exit
+      case TOUCH_INPUT_COMMAND =>
+        if (tokens.length < 2) incompleteCommand(TOUCH_INPUT_COMMAND)
+        else new Touch(tokens(1))
       case _ => new UnknownCommand
     }
   }
