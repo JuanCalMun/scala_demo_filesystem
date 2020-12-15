@@ -6,12 +6,15 @@ class State(val root: Directory, val workingDirectory: Directory, val output: St
 
 
   def show: Unit = {
-    println(output)
+    if (!output.isBlank) println(output)
     print(State.SHELL_TOKEN)
   }
 
   def setMessage(message: String): State =
     State(root, workingDirectory, message)
+
+  def setWorkingDirectory(workingDirectory: Directory): State =
+    State(root, workingDirectory, "")
 
 }
 

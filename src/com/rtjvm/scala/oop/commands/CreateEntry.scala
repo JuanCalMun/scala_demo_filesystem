@@ -31,7 +31,7 @@ abstract class CreateEntry(newEntryName: String) extends Command {
     }
 
     val allDirsInPath = workingDirectory.getAllFoldersInPath
-    val newEntry: DirEntry = doCreateEntry(workingDirectory.path, name)
+    val newEntry: DirEntry = doCreateEntry(workingDirectory.path)
     val newRoot = updateStructure(state.root, allDirsInPath, newEntry)
     val newWorkingDirectory = newRoot.findDescendant(allDirsInPath)
 
@@ -42,7 +42,7 @@ abstract class CreateEntry(newEntryName: String) extends Command {
 
   def printIllegalCreate(fileName: String): String = s"$fileName must not contain separators"
 
-  def doCreateEntry(path: String, entryName: String): DirEntry
+  def doCreateEntry(path: String): DirEntry
 
   def printCreatedDir(fileName: String): String = s"$fileName created successfully"
 

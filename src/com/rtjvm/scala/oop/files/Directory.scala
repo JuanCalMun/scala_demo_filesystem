@@ -2,12 +2,14 @@ package com.rtjvm.scala.oop.files
 
 import java.nio.file.FileSystemException
 
+import com.rtjvm.scala.oop.files.Directory.SEPARATOR
+
 class Directory(override val parentPath: String, override val name: String, val contents: List[DirEntry])
   extends DirEntry(parentPath, name) {
   def hasEntry(name: String): Boolean = contents.map(_.name).contains(name)
 
   def findEntry(entryName: String): DirEntry = {
-    contents.find(e => e.name.eq(entryName)).orNull
+    contents.find(_.name == entryName).orNull
   }
 
   def addEntry(newEntry: DirEntry): Directory =
@@ -29,6 +31,16 @@ class Directory(override val parentPath: String, override val name: String, val 
     throw new FileSystemException("A directory cannot be converted to a file")
 
   override def getType: String = "Directory"
+
+  def isRoot: Boolean = parentPath.isEmpty
+
+  override def isDirectory: Boolean = true
+
+  override def toString: String =
+    if (name == "") SEPARATOR
+    else if (parentPath == SEPARATOR) SEPARATOR + name
+    else parentPath + SEPARATOR + name
+
 }
 
 object Directory {

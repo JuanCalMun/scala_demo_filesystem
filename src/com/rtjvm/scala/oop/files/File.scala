@@ -12,6 +12,8 @@ class File(override val parentPath: String,
     this
 
   override def getType: String = "File"
+
+  override def isFile: Boolean = true
 }
 
 object File {
